@@ -2,6 +2,7 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "express": "^4.17.2",
+    "helmet": "^5.0.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.7",
     "mongoose-unique-validator": "^3.0.0",

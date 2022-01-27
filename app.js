@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const helmet = require("helmet");
 const sauceRoutes = require("./routes/sauce");
 const userRoutes = require("./routes/user");
 const path = require("path");
@@ -14,6 +15,7 @@ mongoose
   .catch((error) => console.log("Connexion à MongoDB échouée !", error));
 
 app.use(express.json());
+app.use(helmet({ crossOriginResourcePolicy: false }));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");

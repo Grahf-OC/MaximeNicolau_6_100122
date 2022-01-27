@@ -76,9 +76,8 @@ exports.likeSauce = (req, res, next) => {
         $inc: { likes: +1 },
         $push: { usersLiked: req.body.userId },
       }
-    );
-    Sauce.findOne({ _id: req.params.id })
-      .then((sauce) => console.log(sauce.usersLiked))
+    )
+
       .then(() => res.status(200).json({ message: "Sauce aimée!" }))
       .catch((error) => res.status(400).json({ error }));
   } else if (req.body.like === -1) {
@@ -89,8 +88,8 @@ exports.likeSauce = (req, res, next) => {
         $push: { usersDisliked: req.body.userId },
       }
     )
-        .then(() => res.status(200).json({ message: "Sauce non aimée!" }))
-        .catch((error) => res.status(400).json({ error }));
+      .then(() => res.status(200).json({ message: "Sauce non aimée!" }))
+      .catch((error) => res.status(400).json({ error }));
   } else {
     Sauce.findOne({ _id: req.params.id })
       .then((sauce) => {

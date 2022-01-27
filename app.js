@@ -1,16 +1,18 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const path = require("path");
+require("dotenv").config();
 const helmet = require("helmet");
 const sauceRoutes = require("./routes/sauce");
 const userRoutes = require("./routes/user");
-const path = require("path");
+
 const app = express();
 
 mongoose
-  .connect(
-    "mongodb+srv://Grahf-OC:47zb$qujmECnLAs@cluster0.uqhkr.mongodb.net/P6Database?retryWrites=true&w=majority",
-    { useNewUrlParser: true, useUnifiedTopology: true }
-  )
+  .connect(process.env.MONGODB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch((error) => console.log("Connexion à MongoDB échouée !", error));
 

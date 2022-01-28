@@ -38,6 +38,8 @@ exports.createSauce = (req, res, next) => {
     }`,
     likes: 0,
     dislikes: 0,
+    usersLiked: [],
+    usersDisliked: [],
   });
   sauce
     .save()
@@ -90,7 +92,7 @@ exports.likeSauce = (req, res, next) => {
     )
       .then(() => res.status(200).json({ message: "Sauce non aimée!" }))
       .catch((error) => res.status(400).json({ error }));
-  } else {
+  } else if (req.body.like === 0) {
     Sauce.findOne({ _id: req.params.id })
       .then((sauce) => {
         if (sauce.usersLiked.includes(req.body.userId)) {
@@ -120,6 +122,8 @@ exports.likeSauce = (req, res, next) => {
         }
       })
       .catch((error) => res.status(400).json({ error }));
+  } else {
+    res.status(403).json({ error: "unauthorized request" });
   }
 };
 

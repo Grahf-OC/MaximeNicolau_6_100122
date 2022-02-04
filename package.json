@@ -8,6 +8,7 @@
     "mongoose": "^6.1.7",
     "mongoose-unique-validator": "^3.0.0",
     "multer": "^1.4.4",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "password-validator": "^5.2.1"
   }
 }

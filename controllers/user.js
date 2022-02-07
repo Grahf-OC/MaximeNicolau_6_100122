@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 
 require("dotenv").config();
 
+// Mise en place du password validator
 
 const pwSchema = new passwordValidator();
 
@@ -15,8 +16,11 @@ pwSchema
   .has().lowercase()                              // Must have lowercase letters
   .has().digits(2)                                // Must have at least 2 digits
   .has().not().spaces()                           // Should not have spaces
-  .is().not().oneOf(['Passw0rd', 'Password123', '1234']);
+  .is().not().oneOf(['Passw0rd', 'Password123']);
 
+  /*Signup vérifie que le password est suffisamment fort, puis bcrypt hash le password.
+  On enregistre ensuite l'email et le hash dans une constante user qui suit notre modèle User.
+  Puis on save user dans la BDD.*/
 
 exports.signup = (req, res, next) => {
   if (!pwSchema.validate(req.body.password)) {
@@ -37,6 +41,11 @@ exports.signup = (req, res, next) => {
       .catch((error) => res.status(500).json({ error }));
   }
 };
+
+/*Cherche l'utilisateur en fonctionnant de son adresse email. Bcrypt compare ensuite le password entré avec
+celui correspondant à l'adresse email dans la BDD. S'ils correspondent, on renvoie un objet JSON contenant un userId
+correspondant à l'user._id de l'utilisateur, ainsi qu'un token d'authentification valable 24h. Le token contient
+l'id de l'utilisateur (encodé) en tant que payload. */
 
 exports.login = (req, res, next) => {
   User.findOne({ email: req.body.email })
